@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>ReciclaFácil - Pontuação</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <!-- Cabeçalho padrão -->
+    <header class="topo">
+        <!-- Título com link para a página inicial -->
+        <h1 class="titulo-principal"><a href="index.html" class="link-titulo">ReciclaFácil</a></h1>
+        <nav class="menu-superior">
+            <a href="perfil.html" class="link-menu">Início</a>
+            <a href="registro.html" class="link-menu">Registrar Descarte</a>
+            <a href="gamificacao.html" class="link-menu">Pontuação</a>
+            <a href="mapa.html" class="link-menu">Pontos de descarte</a>
+            <a href="guia.html" class="link-menu">Guia de descarte</a>
+        </nav>
+    </header>
+
+    <!-- Conteúdo principal -->
+    <main class="pontuacao-main">
+
+        <h2 class="titulo-pagina">Minha Pontuação</h2>
+
+        <div class="painel-pontos">
+            <img src="imagens/Trofeu.png" alt="Trofeu" class="imagem-trofeu">
+            <div class="painel-info">
+                <p class="painel-texto">Pontos Acumulados</p>
+                <p class="painel-pontuacao">1.304</p>
+                <div class="barra-progresso">
+                    <div class="progresso-preenchido" style="width: 65%;"></div>
+                </div>
+                <small>Faltam 196 pontos para o Cupom!</small>
+            </div>
+        </div>
+
+        <button class="botao-trocar">
+            🔄 Trocar
+        </button>
+
+        <hr class="separador">
+
+        <h3 class="recompensas-titulo">Recompensas</h3>
+
+        <div class="recompensas-container">
+            <button class="recompensa-botao">
+                <img src="imagens/sacola.png" alt="Sacola" class="imagem-recompensa">
+                <div class="recompensa-info">
+                    <p class="nome-recompensa">Saco de compras reutilizável</p>
+                    <p class="custo-recompensa">500 pontos</p>
+                </div>
+            </button>
+
+            <button class="recompensa-botao">
+                <img src="imagens/vale.png" alt="Vale" class="imagem-recompensa">
+                <div class="recompensa-info">
+                    <p class="nome-recompensa">Vale-café</p>
+                    <p class="custo-recompensa">800 pontos</p>
+                </div>
+            </button>
+
+            <button class="recompensa-botao">
+                <img src="imagens/cupom.png" alt="Cupom" class="imagem-recompensa">
+                <div class="recompensa-info">
+                    <p class="nome-recompensa">Cupom de desconto</p>
+                    <p class="custo-recompensa">1200 pontos</p>
+                </div>
+            </button>
+        </div>
+        
+    </main>
+
+</body>
+</html>
