@@ -1,0 +1,864 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #ffffff; /* Fundo branco como no original */
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.titulo-principal {
+  color: #008080;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+/* Estilo do link no título (original do CssOriginal.css) */
+.link-titulo {
+  color: #008080;       /* Cor do título */
+  text-decoration: none; /* Remove o sublinhado */
+}
+
+.link-titulo:hover {
+  text-decoration: underline; /* Adiciona o sublinhado no hover */
+}
+
+.menu-superior { /* Original do CssOriginal.css */
+  background-color: #008080;
+  padding: 10px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.link-menu { /* Original do CssOriginal.css */
+  color: white;
+  text-decoration: none;
+  margin: 0 15px;
+  font-size: 16px;
+}
+
+.link-menu:hover { /* Original do CssOriginal.css */
+  text-decoration: underline;
+}
+
+/* ==================================================================== */
+/* === ESTILOS ESPECÍFICOS PARA A TELA DE LOGIN (index.html) SOMENTE === */
+/* ==================================================================== */
+
+/* Oculta a barra de rolagem e centraliza o conteúdo APENAS para a tela de login */
+/* Isso é feito com um seletor mais específico para não afetar outras páginas. */
+/* Garantimos que a imagem do logotipo não seja muito grande e ocupe a largura da tela */
+body:has(.login-container) { /* Este seletor significa "se o body tiver um .login-container" */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    overflow-y: hidden;
+    overflow-x: hidden;
+    background-color: #f0f2f5; /* Fundo cinza claro que você gostou */
+}
+
+body:has(.login-container) .titulo-principal {
+    font-size: 2.2em; /* Tamanho maior para destaque na tela de login */
+    margin-bottom: 10px; /* Ajuste o margin-bottom conforme necessário */
+}
+
+body:has(.login-container) .logo {
+    max-width: 150px; /* Tamanho ajustado para ficar mais bonito na tela de login */
+    height: auto;
+    margin: 20px auto 30px auto; /* Centraliza e adiciona espaço abaixo */
+}
+
+/* Container de login (usado no index.html e register.html) */
+.login-container {
+    background-color: #ffffff; /* Fundo branco */
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 400px;
+    text-align: center;
+    margin-bottom: 25px; /* Espaço entre o container de login e o rodapé */
+    box-sizing: border-box;
+}
+
+/* Inputs de login e registro */
+.input-login {
+    width: calc(100% - 20px); /* 100% da largura do pai menos o padding */
+    padding: 10px;
+    margin-bottom: 15px; /* Espaço entre os inputs */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+    display: block;
+    box-sizing: border-box;
+}
+
+.input-login:focus {
+    border-color: #008080;
+    outline: none;
+}
+
+/* Botão de acessar */
+.botao-acessar {
+    display: block; /* Ocupa a largura total */
+    padding: 12px 20px;
+    margin: 15px auto 10px auto; /* Espaço e centralização */
+    background-color: #008080;
+    color: white;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.botao-acessar:hover {
+    background-color: #006666;
+    transform: scale(1.01);
+}
+
+/* Link 'Esqueci minha senha' */
+.esqueci-senha {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #008080;
+}
+
+.esqueci-senha a {
+    color: #008080;
+    text-decoration: none;
+}
+
+.esqueci-senha a:hover {
+    text-decoration: underline;
+}
+
+/* Rodapé criar conta */
+.rodape-criar-conta {
+    /* Não usar position: fixed para evitar a barra de rolagem vertical */
+    margin-top: 25px;
+    margin-bottom: 20px;
+    width: 100%;
+    background-color: transparent; /* Fundo transparente */
+    padding: 12px 0;
+    font-size: 14px;
+    color: #008080;
+    text-align: center;
+}
+
+.rodape-criar-conta p {
+    margin: 0;
+}
+
+/* Estilos para o link "Toque para criar uma agora" */
+#createAccountLink {
+    cursor: pointer;
+    color: #0056b3;
+    text-decoration: underline;
+}
+
+#createAccountLink:hover {
+    color: #003366;
+}
+
+/* ==================================================================== */
+/* === FIM DOS ESTILOS ESPECÍFICOS PARA A TELA DE LOGIN SOMENTE === */
+/* ==================================================================== */
+
+
+/* --- Estilos da página de perfil (voltando ao CssOriginal.css) --- */
+.perfil-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 150px);
+  padding: 30px 20px;
+}
+
+.perfil-card {
+  background-color: #e0f7fa;
+  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px;
+  position: relative;
+}
+
+.editar-perfil-container {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.botao-editar {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.foto-nome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.foto-usuario {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+}
+
+.nome-usuario {
+  color: #008080;
+  font-size: 26px;
+  margin: 0;
+}
+
+.pontuacao-container {
+  margin-bottom: 30px;
+}
+
+.meus-pontos {
+  color: #008080;
+  font-size: 18px;
+  margin: 10px 0 5px 0;
+}
+
+.pontuacao-usuario {
+  color: #008080;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Barra de progresso */
+.barra-progresso {
+  background-color: #b2dfdb;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 12px;
+  width: 100%;
+  margin: 10px 0;
+}
+
+.progresso-preenchido {
+  background-color: #008080;
+  height: 100%;
+  width: 0;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Botões Status e Histórico */
+.botoes-perfil {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.botao-perfil {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: default;
+  width: 100%;
+}
+
+/* Conquistas (Badges) */
+.conquistas {
+  margin-bottom: 30px;
+}
+
+.conquistas h4 {
+  color: #008080;
+  margin-bottom: 10px;
+}
+
+.badges {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.badge {
+  background-color: #b2dfdb;
+  color: #004d40;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+}
+
+/* Descartes Recentes */
+.descartes-recentes h4 {
+  color: #008080;
+  margin-bottom: 10px;
+}
+
+.descartes-recentes ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.descartes-recentes li {
+  background-color: #ffffff;
+  border: 1px solid #b2dfdb;
+  margin-bottom: 8px;
+  padding: 8px;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .perfil-card {
+    padding: 30px 20px;
+  }
+
+  .foto-usuario {
+    width: 100px;
+    height: 100px;
+  }
+
+  .nome-usuario {
+    font-size: 22px;
+  }
+
+  .botao-editar {
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+}
+
+/* Botões interativos */
+.botao-editar,
+.botao-perfil {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 14px 0;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  width: 100%;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.botao-editar:hover,
+.botao-perfil:hover {
+  background-color: #006666;
+  transform: scale(1.02);
+}
+
+.botao-editar:active,
+.botao-perfil:active {
+  transform: scale(0.98);
+}
+
+/* Melhorar badges */
+.badge {
+  background-color: #b2dfdb;
+  color: #004d40;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.badge:hover {
+  transform: scale(1.05);
+  background-color: #80cbc4;
+}
+
+/* Itens de descartes recentes */
+.descartes-recentes li {
+  background-color: #ffffff;
+  border: 1px solid #b2dfdb;
+  margin-bottom: 8px;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: background-color 0.3s, transform 0.2s;
+  cursor: pointer;
+}
+
+.descartes-recentes li:hover {
+  background-color: #e0f7fa;
+  transform: scale(1.01);
+}
+
+/* Estilos específicos para a página de Registro (original do CssOriginal.css) */
+.registro-main {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-pagina {
+  color: #008080;
+  font-size: 28px;
+  margin-bottom: 5px;
+}
+
+.subtitulo-pagina {
+  color: black;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.formulario-registro {
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.label-registro {
+  font-weight: bold;
+  color: #008080;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  align-self: flex-start;
+}
+
+.input-registro {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.area-foto {
+  width: 100%;
+  height: 150px;
+  border: 2px dashed #008080;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0;
+  color: #008080;
+  font-size: 18px;
+}
+
+.botao-registrar {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 18px;
+  cursor: default; /* botão apenas visual, sem ação */
+}
+
+.card-formulario {
+  background-color: #ffffff;
+  padding: 30px 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 450px;
+}
+
+.input-registro {
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.input-registro:focus {
+  border-color: #008080;
+  box-shadow: 0 0 5px rgba(0,128,128,0.5);
+  outline: none;
+}
+
+.area-foto {
+  transition: background-color 0.3s;
+}
+
+.area-foto:hover {
+  background-color: #f0fafa;
+}
+
+.botao-registrar {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 12px 30px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-top: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.botao-registrar:hover {
+  background-color: #006666;
+}
+
+/* Estilo específico para a página de Pontuação (original do CssOriginal.css) */
+.pontuacao-main {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titulo-pagina {
+  color: #008080;
+  font-size: 28px;
+  margin-bottom: 20px;
+}
+
+/* Painel de Pontos */
+.painel-pontos {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #ffffff;
+  border: 2px solid #008080;
+  border-radius: 10px;
+  padding: 20px;
+  width: 300px;
+  margin-bottom: 20px;
+}
+
+.imagem-trofeu {
+  width: 60px;
+  height: 60px;
+  margin-right: 15px;
+}
+
+.painel-info {
+  text-align: left;
+}
+
+.painel-texto {
+  color: black;
+  margin: 0;
+}
+
+.painel-pontuacao {
+  color: black;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 5px 0 0 0;
+}
+
+/* Botão Trocar */
+.botao-trocar {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-bottom: 30px;
+  cursor: default;
+}
+
+/* Recompensas */
+.recompensas-titulo {
+  color: black;
+  font-size: 22px;
+  margin-bottom: 10px;
+}
+
+.recompensas-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.recompensa-botao {
+  background-color: #ffffff;
+  border: 2px solid #008080;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  text-align: left;
+  gap: 20px;
+  cursor: default;
+}
+
+.imagem-recompensa {
+  width: 50px;
+  height: 50px;
+}
+
+.recompensa-info p {
+  margin: 0;
+  color: #008080;
+}
+
+.separador {
+  border: none;
+  border-top: 2px solid #b2dfdb;
+  margin: 40px 0;
+  width: 80%;
+}
+
+/* Barra de Progresso dentro do Painel */
+.barra-progresso {
+  background-color: #b2dfdb;
+  border-radius: 10px;
+  overflow: hidden;
+  height: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.progresso-preenchido {
+  background-color: #008080;
+  height: 100%;
+  transition: width 0.5s ease-in-out;
+}
+
+/* Tipografia diferenciada para Nome do prêmio */
+.nome-recompensa {
+  color: #004d40;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+}
+
+.custo-recompensa {
+  color: #008080;
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Efeito hover nos cartões de recompensa */
+.recompensa-botao:hover {
+  background-color: #e0f2f1;
+  transform: scale(1.02);
+  transition: all 0.3s ease;
+}
+
+/* Botão Trocar pequeno ajuste */
+.botao-trocar {
+  background-color: #008080;
+  color: white;
+  border: none;
+  padding: 10px 25px;
+  border-radius: 8px;
+  font-size: 18px;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  cursor: pointer;
+}
+
+.botao-trocar:hover {
+  background-color: #00695c;
+}
+
+/* Suavizar carregamento */
+.pontuacao-main {
+  animation: fadeIn 0.7s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+
+/* Estilos exclusivos da página de mapa (original do CssOriginal.css) */
+main {
+  padding: 20px;
+}
+
+.subtitulo {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.descricao {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.formulario {
+  margin-bottom: 40px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formulario label {
+  display: block;
+  margin: 12px 0 6px;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.mapa-simulado {
+  background-color: #e0f7fa;
+  padding: 20px;
+  border-radius: 12px;
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.mapa-simulado h3 {
+  margin-bottom: 20px;
+  color: #00695c;
+  text-align: center;
+}
+
+.ponto {
+  background-color: #ffffff;
+  border: 1px solid #b2dfdb;
+  border-radius: 10px;
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.ponto h4 {
+  margin: 0 0 5px;
+  color: #004d40;
+}
+
+.ponto p, .ponto span {
+  margin: 2px 0;
+  font-size: 15px;
+  color: #555;
+}
+
+/* Estilos para todas as páginas (original do CssOriginal.css) */
+main {
+  padding: 20px;
+}
+
+.subtitulo {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.descricao {
+  font-size: 16px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+/* Formulário padrão (original do CssOriginal.css) */
+.formulario {
+  margin-bottom: 30px;
+  text-align: left;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+/* Botoes de materiais (original do CssOriginal.css) */
+.botoes-materiais {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.botao-material {
+  padding: 10px 20px;
+  border: none;
+  background-color: #008080;
+  color: white;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.botao-material:hover {
+  background-color: #006666;
+}
+
+/* Informações úteis (original do CssOriginal.css) */
+.informacoes-uteis {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.informacoes-uteis h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #00695c;
+}
+
+.info-item {
+  background-color: #e0f7fa;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+.info-item h4 {
+  margin-top: 0;
+  color: #004d40;
+}
+
+.info-item p {
+  color: #555;
+  margin: 10px 0;
+}
+
+.info-item a {
+  display: inline-block;
+  margin-top: 10px;
+  color: #008080;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.info-item a:hover {
+  text-decoration: underline;
+}
+}
