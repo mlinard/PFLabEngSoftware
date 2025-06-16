@@ -3,13 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ReciclaFácil - Pontuação</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link rel="stylesheet" href="/css/style.css"> </head>
 <body>
 
-    <!-- Cabeçalho padrão -->
     <header class="topo">
-        <!-- Título com link para a página inicial -->
         <h1 class="titulo-principal"><a href="index.html" class="link-titulo">ReciclaFácil</a></h1>
         <nav class="menu-superior">
             <a href="perfil.html" class="link-menu">Início</a>
@@ -20,21 +17,16 @@
         </nav>
     </header>
 
-    <!-- Conteúdo principal -->
     <main class="pontuacao-main">
 
         <h2 class="titulo-pagina">Minha Pontuação</h2>
 
         <div class="painel-pontos">
-            <img src="imagens/Trofeu.png" alt="Trofeu" class="imagem-trofeu">
-            <div class="painel-info">
+            <img src="/Imagens/Trofeu.png" alt="Trofeu" class="imagem-trofeu"> <div class="painel-info">
                 <p class="painel-texto">Pontos Acumulados</p>
-                <p class="painel-pontuacao">1.304</p>
-                <div class="barra-progresso">
-                    <div class="progresso-preenchido" style="width: 65%;"></div>
-                </div>
-                <small>Faltam 196 pontos para o Cupom!</small>
-            </div>
+                <p class="painel-pontuacao" id="gamificationPoints">1.304</p> <div class="barra-progresso">
+                    <div class="progresso-preenchido" id="gamificationProgressBar" style="width: 65%;"></div> </div>
+                <small id="gamificationNextLevelText">Faltam 196 pontos para o Cupom!</small> </div>
         </div>
 
         <button class="botao-trocar">
@@ -47,31 +39,62 @@
 
         <div class="recompensas-container">
             <button class="recompensa-botao">
-                <img src="imagens/sacola.png" alt="Sacola" class="imagem-recompensa">
-                <div class="recompensa-info">
+                <img src="/Imagens/sacola.png" alt="Sacola" class="imagem-recompensa"> <div class="recompensa-info">
                     <p class="nome-recompensa">Saco de compras reutilizável</p>
                     <p class="custo-recompensa">500 pontos</p>
                 </div>
             </button>
 
             <button class="recompensa-botao">
-                <img src="imagens/vale.png" alt="Vale" class="imagem-recompensa">
-                <div class="recompensa-info">
+                <img src="/Imagens/vale.png" alt="Vale" class="imagem-recompensa"> <div class="recompensa-info">
                     <p class="nome-recompensa">Vale-café</p>
                     <p class="custo-recompensa">800 pontos</p>
                 </div>
             </button>
 
             <button class="recompensa-botao">
-                <img src="imagens/cupom.png" alt="Cupom" class="imagem-recompensa">
-                <div class="recompensa-info">
+                <img src="/Imagens/cupom.png" alt="Cupom" class="imagem-recompensa"> <div class="recompensa-info">
                     <p class="nome-recompensa">Cupom de desconto</p>
                     <p class="custo-recompensa">1200 pontos</p>
                 </div>
             </button>
         </div>
-        
+
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('loggedInUserId');
+            if (!userId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://18.222.5.253:5000/user-data/${userId}`); // URL da API
+                const data = await response.json();
+
+                if (response.ok) {
+                    const user = data.user;
+                    document.getElementById('gamificationPoints').textContent = user.points;
+                    
+                    const pointsToNextLevel = user.next_level_points - user.points;
+                    document.getElementById('gamificationNextLevelText').textContent = `Faltam ${Math.max(0, pointsToNextLevel)} pontos para o próximo nível!`;
+                    
+                    const progress = (user.points / user.next_level_points) * 100;
+                    document.getElementById('gamificationProgressBar').style.width = `${Math.min(progress, 100)}%`;
+
+                } else {
+                    console.error('Erro ao carregar dados do usuário:', data.message);
+                    alert('Erro ao carregar sua pontuação. Tente fazer login novamente.');
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Erro na requisição para obter dados do usuário (pontuação):', error);
+                alert('Não foi possível conectar ao servidor para carregar a pontuação. Tente novamente.');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
 </body>
 </html>
