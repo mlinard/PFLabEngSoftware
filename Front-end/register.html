@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>ReciclaFácil - Criar Conta</title>
+    <link rel="stylesheet" href="/css/style.css"> </head>
+<body>
+
+    <h1 class="titulo-principal"><a href="index.html" class="link-titulo">ReciclaFácil</a></h1>
+
+    <div class="login-container"> <h2>Criar Nova Conta</h2>
+
+        <input type="text" id="name" placeholder="Seu Nome" class="input-login"> <input type="email" id="email" placeholder="Email" class="input-login"> <input type="password" id="password" placeholder="Senha" class="input-login"> <button id="registerButton" class="botao-acessar">Registrar</button> <p style="margin-top: 15px;">Já tenho uma conta. <a href="index.html" style="color: blue; text-decoration: underline;">Voltar para o Login</a></p>
+        <div id="registerMessage" style="color: red; margin-top: 10px;"></div> </div>
+
+    <script>
+        document.getElementById('registerButton').addEventListener('click', async () => {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('registerMessage');
+            messageDiv.textContent = ''; // Limpa mensagens anteriores
+
+            try {
+                const response = await fetch('http://18.222.5.253:5000/register', { // URL da API
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ name, email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) { // Status 2xx (ex: 201 Created)
+                    messageDiv.style.color = 'green';
+                    messageDiv.textContent = data.message + ' Redirecionando para login...';
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Volta para o login
+                    }, 2000);
+                } else { // Status 4xx ou 5xx (erro)
+                    messageDiv.style.color = 'red';
+                    messageDiv.textContent = data.message || 'Erro ao registrar usuário.';
+                }
+            } catch (error) {
+                console.error('Erro na requisição de registro:', error);
+                messageDiv.style.color = 'red';
+                messageDiv.textContent = 'Não foi possível conectar ao servidor para registrar.';
+            }
+        });
+    </script>
+</body>
+</html>
