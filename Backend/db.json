@@ -1,0 +1,67 @@
+{
+  "users": [
+    {
+      "id": "user1",
+      "email": "marcos@example.com",
+      "password": "senha123",
+      "name": "Marcos Paulo",
+      "points": 1304,
+      "next_level_points": 2000,
+      "badges": [
+        "Iniciante",
+        "Eco Warrior",
+        "Top Reciclador"
+      ],
+      "recent_discards": [
+        {
+          "item": "Papelão",
+          "weight": "2kg",
+          "date": "24/04/2025"
+        },
+        {
+          "item": "Alumínio",
+          "weight": "1.2kg",
+          "date": "22/04/2025"
+        },
+        {
+          "item": "Orgânico",
+          "weight": "5kg",
+          "date": "20/04/2025"
+        }
+      ]
+    },
+    {
+      "id": "user2",
+      "email": "ana@example.com",
+      "password": "ana456",
+      "name": "Ana Silva",
+      "points": 850,
+      "next_level_points": 1000,
+      "badges": [
+        "Iniciante"
+      ],
+      "recent_discards": [
+        {
+          "item": "Vidro",
+          "weight": "1kg",
+          "date": "15/05/2025"
+        },
+        {
+          "item": "Plástico",
+          "weight": "0.5kg",
+          "date": "10/05/2025"
+        }
+      ]
+    },
+    {
+      "id": "user3",
+      "email": "marcello.linard@gmail.com",
+      "password": "12345678",
+      "name": "Marcello ",
+      "points": 0,
+      "next_level_points": 100,
+      "badges": [],
+      "recent_discards": []
+    }
+  ]
+}
