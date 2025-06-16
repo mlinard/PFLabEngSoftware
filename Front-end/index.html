@@ -3,29 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <title>ReciclaFácil - Login</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link rel="stylesheet" href="/css/style.css"> </head>
 <body>
 
     <h1 class="titulo-principal">ReciclaFácil</h1>
     
-    <!-- Adicionando a imagem do logotipo abaixo do título -->
-    <img src="Imagens/Logotipo.png" alt="Logotipo ReciclaFácil" class="logo">
-
-    <div class="login-container">
+    <img src="/Imagens/Logotipo.png" alt="Logotipo ReciclaFácil" class="logo"> <div class="login-container">
         <h2>Bem-vindo(a) ao ReciclaFácil!</h2>
 
-        <input type="email" placeholder="Email" class="input-login">
-        <input type="password" placeholder="Senha" class="input-login">
-
-        <a href="perfil.html" class="botao-acessar">Acessar</a>
-
-        <p class="esqueci-senha">Esqueci minha senha</p>
-    </div>
+        <input type="email" id="email" placeholder="Email" class="input-login"> <input type="password" id="password" placeholder="Senha" class="input-login"> <button id="loginButton" class="botao-acessar">Acessar</button> <p class="esqueci-senha">Esqueci minha senha</p>
+        <div id="loginMessage" style="color: red; margin-top: 10px;"></div> </div>
 
     <div class="rodape-criar-conta">
-        <p>Não tenho uma conta. Toque para criar uma agora</p>
-    </div>
+        <p>Não tenho uma conta. <span id="createAccountLink" style="cursor: pointer; color: blue; text-decoration: underline;">Toque para criar uma agora</span></p> </div>
 
+    <script>
+        // SEU CÓDIGO JAVASCRIPT CORRETO
+        document.getElementById('loginButton').addEventListener('click', async () => {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('loginMessage');
+            messageDiv.textContent = ''; // Limpa mensagens anteriores
+
+            try {
+                const response = await fetch('http://18.222.5.253:5000/login', { // URL da API
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) { // Status 2xx (ex: 200 OK)
+                    messageDiv.style.color = 'green';
+                    messageDiv.textContent = data.message;
+                    localStorage.setItem('loggedInUserId', data.user.id);
+                    localStorage.setItem('lastLoginResponseTime', data.user.login_response_time_ms);
+                    
+                    console.log('Métrica de Tempo de Resposta do Login (RNF):', data.user.login_response_time_ms + 'ms');
+                    
+                    setTimeout(() => {
+                        window.location.href = 'perfil.html';
+                    }, 1000); // Redireciona após 1 segundo
+                } else { // Status 4xx ou 5xx (erro)
+                    messageDiv.style.color = 'red';
+                    messageDiv.textContent = data.message || 'Erro ao fazer login.';
+                }
+            } catch (error) {
+                console.error('Erro na requisição de login:', error);
+                messageDiv.style.color = 'red';
+                messageDiv.textContent = 'Não foi possível conectar ao servidor. Tente novamente.';
+            }
+        });
+
+        document.getElementById('createAccountLink').addEventListener('click', () => {
+            window.location.href = 'register.html'; 
+        });
+    </script>
 </body>
 </html>
