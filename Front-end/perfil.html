@@ -3,12 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>ReciclaFácil - Perfil</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link rel="stylesheet" href="/css/style.css"> </head>
+<body>
 
-    <!-- Cabeçalho padrão (mantido) -->
     <header class="topo">
-        <!-- Título com link para a página inicial -->
         <h1 class="titulo-principal"><a href="index.html" class="link-titulo">ReciclaFácil</a></h1>
         <nav class="menu-superior">
             <a href="perfil.html" class="link-menu">Início</a>
@@ -19,29 +17,21 @@
         </nav>
     </header>
     
-    <!-- Conteúdo principal -->
     <main class="perfil-main">
 
         <section class="perfil-card">
-            <!-- Botão Editar Perfil -->
             <div class="editar-perfil-container">
                 <button class="botao-editar">Editar Perfil</button>
             </div>
 
             <div class="foto-nome">
-                <img src="imagens/usuario.png" alt="Foto do Usuário" class="foto-usuario">
-                <h3 class="nome-usuario">Marcos Paulo</h3>
-            </div>
+                <img src="/Imagens/usuario.png" alt="Foto do Usuário" class="foto-usuario"> <h3 class="nome-usuario" id="userName">Marcos Paulo</h3> </div>
 
             <div class="pontuacao-container">
                 <p class="meus-pontos">Meus pontos</p>
-                <p class="pontuacao-usuario">1.304</p>
-
-                <div class="barra-progresso">
-                    <div class="progresso-preenchido" style="width: 65%;"></div>
-                </div>
-                <small>Próximo nível: 2.000 pontos</small>
-            </div>
+                <p class="pontuacao-usuario" id="userPoints">1.304</p> <div class="barra-progresso">
+                    <div class="progresso-preenchido" id="progressBar" style="width: 65%;"></div> </div>
+                <small id="nextLevelText">Próximo nível: 2.000 pontos</small> </div>
 
             <div class="botoes-perfil">
                 <button class="botao-perfil">Status</button>
@@ -50,23 +40,74 @@
 
             <div class="conquistas">
                 <h4>Conquistas</h4>
-                <div class="badges">
-                    <div class="badge">♻️ Iniciante</div>
-                    <div class="badge">🌎 Eco Warrior</div>
-                    <div class="badge">🏆 Top Reciclador</div>
-                </div>
+                <div class="badges" id="userBadges">
+                    </div>
             </div>
 
             <div class="descartes-recentes">
                 <h4>Descartes Recentes</h4>
-                <ul>
-                    <li>📦 Papelão - 2kg - 24/04/2025</li>
-                    <li>🥫 Alumínio - 1,2kg - 22/04/2025</li>
-                    <li>🍃 Orgânico - 5kg - 20/04/2025</li>
-                </ul>
+                <ul id="recentDiscardsList">
+                    </ul>
             </div>
         </section>
 
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const userId = localStorage.getItem('loggedInUserId');
+            if (!userId) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            try {
+                const response = await fetch(`http://18.222.5.253:5000/user-data/${userId}`); // URL da API
+                const data = await response.json();
+
+                if (response.ok) {
+                    const user = data.user;
+                    document.getElementById('userName').textContent = user.name;
+                    document.getElementById('userPoints').textContent = user.points;
+                    document.getElementById('nextLevelText').textContent = `Próximo nível: ${user.next_level_points} pontos`;
+                    
+                    const progress = (user.points / user.next_level_points) * 100;
+                    document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+
+                    const userBadgesDiv = document.getElementById('userBadges');
+                    userBadgesDiv.innerHTML = '';
+                    user.badges.forEach(badge => {
+                        const badgeDiv = document.createElement('div');
+                        badgeDiv.className = 'badge';
+                        badgeDiv.textContent = `♻️ ${badge}`;
+                        userBadgesDiv.appendChild(badgeDiv);
+                    });
+
+                    const recentDiscardsList = document.getElementById('recentDiscardsList');
+                    recentDiscardsList.innerHTML = '';
+                    if (user.recent_discards && user.recent_discards.length > 0) {
+                        user.recent_discards.forEach(discard => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = `📦 ${discard.item} - ${discard.weight} - ${discard.date}`;
+                            recentDiscardsList.appendChild(listItem);
+                        });
+                    } else {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = 'Nenhum descarte recente.';
+                        recentDiscardsList.appendChild(listItem);
+                    }
+
+                } else {
+                    console.error('Erro ao carregar dados do usuário:', data.message);
+                    alert('Erro ao carregar seu perfil. Tente fazer login novamente.');
+                    window.location.href = 'index.html';
+                }
+            } catch (error) {
+                console.error('Erro na requisição para obter dados do usuário:', error);
+                alert('Não foi possível conectar ao servidor para carregar o perfil. Tente novamente.');
+                window.location.href = 'index.html';
+            }
+        });
+    </script>
+</body>
 </html>
