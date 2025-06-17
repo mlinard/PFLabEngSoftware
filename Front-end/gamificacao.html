@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>ReciclaFácil - Pontuação</title>
-    <link rel="stylesheet" href="/css/style.css"> </head>
+    <link rel="stylesheet" href="/css/style.css"> 
+</head>
 <body>
 
     <header class="topo">
@@ -22,38 +23,44 @@
         <h2 class="titulo-pagina">Minha Pontuação</h2>
 
         <div class="painel-pontos">
-            <img src="/Imagens/Trofeu.png" alt="Trofeu" class="imagem-trofeu"> <div class="painel-info">
+            <img src="/Imagens/Trofeu.png" alt="Trofeu" class="imagem-trofeu"> 
+            <div class="painel-info">
                 <p class="painel-texto">Pontos Acumulados</p>
-                <p class="painel-pontuacao" id="gamificationPoints">1.304</p> <div class="barra-progresso">
-                    <div class="progresso-preenchido" id="gamificationProgressBar" style="width: 65%;"></div> </div>
-                <small id="gamificationNextLevelText">Faltam 196 pontos para o Cupom!</small> </div>
+                <p class="painel-pontuacao" id="gamificationPoints">0</p> 
+                <div class="barra-progresso">
+                    <div class="progresso-preenchido" id="gamificationProgressBar" style="width: 0%;"></div> 
+                </div>
+                <small id="gamificationNextLevelText"></small> 
+            </div>
         </div>
 
         <button class="botao-trocar">
             🔄 Trocar
         </button>
-
-        <hr class="separador">
+        <p id="redeemMessage" style="color: red; margin-top: 10px;"></p> <hr class="separador">
 
         <h3 class="recompensas-titulo">Recompensas</h3>
 
         <div class="recompensas-container">
-            <button class="recompensa-botao">
-                <img src="/Imagens/sacola.png" alt="Sacola" class="imagem-recompensa"> <div class="recompensa-info">
+            <button class="recompensa-botao" data-reward-name="Saco de compras reutilizável" data-reward-cost="500">
+                <img src="/Imagens/sacola.png" alt="Sacola" class="imagem-recompensa"> 
+                <div class="recompensa-info">
                     <p class="nome-recompensa">Saco de compras reutilizável</p>
                     <p class="custo-recompensa">500 pontos</p>
                 </div>
             </button>
 
-            <button class="recompensa-botao">
-                <img src="/Imagens/vale.png" alt="Vale" class="imagem-recompensa"> <div class="recompensa-info">
+            <button class="recompensa-botao" data-reward-name="Vale-café" data-reward-cost="800">
+                <img src="/Imagens/vale.png" alt="Vale" class="imagem-recompensa"> 
+                <div class="recompensa-info">
                     <p class="nome-recompensa">Vale-café</p>
                     <p class="custo-recompensa">800 pontos</p>
                 </div>
             </button>
 
-            <button class="recompensa-botao">
-                <img src="/Imagens/cupom.png" alt="Cupom" class="imagem-recompensa"> <div class="recompensa-info">
+            <button class="recompensa-botao" data-reward-name="Cupom de desconto" data-reward-cost="1200">
+                <img src="/Imagens/cupom.png" alt="Cupom" class="imagem-recompensa"> 
+                <div class="recompensa-info">
                     <p class="nome-recompensa">Cupom de desconto</p>
                     <p class="custo-recompensa">1200 pontos</p>
                 </div>
@@ -70,30 +77,84 @@
                 return;
             }
 
-            try {
-                const response = await fetch(`http://18.222.5.253:5000/user-data/${userId}`); // URL da API
-                const data = await response.json();
+            const redeemMessage = document.getElementById('redeemMessage'); // Elemento para exibir mensagens de resgate
 
-                if (response.ok) {
-                    const user = data.user;
-                    document.getElementById('gamificationPoints').textContent = user.points;
-                    
-                    const pointsToNextLevel = user.next_level_points - user.points;
-                    document.getElementById('gamificationNextLevelText').textContent = `Faltam ${Math.max(0, pointsToNextLevel)} pontos para o próximo nível!`;
-                    
-                    const progress = (user.points / user.next_level_points) * 100;
-                    document.getElementById('gamificationProgressBar').style.width = `${Math.min(progress, 100)}%`;
+            async function loadUserData() {
+                try {
+                    // URL da API corrigida para localhost
+                    const response = await fetch(`http://18.222.5.253:5000/user-data/${userId}`); 
+                    const data = await response.json();
 
-                } else {
-                    console.error('Erro ao carregar dados do usuário:', data.message);
-                    alert('Erro ao carregar sua pontuação. Tente fazer login novamente.');
+                    if (response.ok) {
+                        const user = data.user;
+                        document.getElementById('gamificationPoints').textContent = user.points;
+                        
+                        // Garante que next_level_points exista e seja um número
+                        const nextLevelTarget = user.next_level_points || 10000; 
+                        const pointsToNextLevel = nextLevelTarget - user.points;
+                        document.getElementById('gamificationNextLevelText').textContent = `Faltam ${Math.max(0, pointsToNextLevel)} pontos para o próximo nível!`;
+                        
+                        const progress = (user.points / nextLevelTarget) * 100;
+                        document.getElementById('gamificationProgressBar').style.width = `${Math.min(progress, 100)}%`;
+
+                    } else {
+                        console.error('Erro ao carregar dados do usuário:', data.message);
+                        alert('Erro ao carregar sua pontuação. Tente fazer login novamente.');
+                        window.location.href = 'index.html';
+                    }
+                } catch (error) {
+                    console.error('Erro na requisição para obter dados do usuário (pontuação):', error);
+                    alert('Não foi possível conectar ao servidor para carregar a pontuação. Tente novamente.');
                     window.location.href = 'index.html';
                 }
-            } catch (error) {
-                console.error('Erro na requisição para obter dados do usuário (pontuação):', error);
-                alert('Não foi possível conectar ao servidor para carregar a pontuação. Tente novamente.');
-                window.location.href = 'index.html';
             }
+
+            // Carrega os dados do usuário ao carregar a página
+            loadUserData();
+
+            // Adiciona evento de clique para os botões de recompensa
+            document.querySelectorAll('.recompensa-botao').forEach(button => {
+                button.addEventListener('click', async () => {
+                    const rewardName = button.dataset.rewardName;
+                    // Converte o custo para número (dataset sempre retorna string)
+                    const rewardCost = parseInt(button.dataset.rewardCost); 
+
+                    // Confirmação com o usuário
+                    const confirmRedeem = confirm(`Deseja realmente resgatar "${rewardName}" por ${rewardCost} pontos?`);
+                    if (!confirmRedeem) {
+                        return; // Cancela se o usuário não confirmar
+                    }
+
+                    try {
+                        const response = await fetch('http://127.0.0.1:5000/redeem-reward', { // Novo endpoint para resgate
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            // Envia o ID do usuário, nome da recompensa e custo para o backend
+                            body: JSON.stringify({ userId, rewardName, rewardCost }) 
+                        });
+
+                        const data = await response.json();
+
+                        if (response.ok) {
+                            redeemMessage.style.color = 'green';
+                            redeemMessage.textContent = data.message;
+                            await loadUserData(); // Recarrega os dados do usuário para atualizar a pontuação na tela
+                            setTimeout(() => { redeemMessage.textContent = ''; }, 3000); // Limpa a mensagem após 3 segundos
+                        } else {
+                            redeemMessage.style.color = 'red';
+                            redeemMessage.textContent = data.message || 'Erro ao resgatar recompensa.';
+                            setTimeout(() => { redeemMessage.textContent = ''; }, 3000);
+                        }
+                    } catch (error) {
+                        console.error('Erro na requisição de resgate de recompensa:', error);
+                        redeemMessage.style.color = 'red';
+                        redeemMessage.textContent = 'Não foi possível conectar ao servidor para resgatar a recompensa.';
+                        setTimeout(() => { redeemMessage.textContent = ''; }, 3000);
+                    }
+                });
+            });
         });
     </script>
 </body>
