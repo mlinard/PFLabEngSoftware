@@ -31,7 +31,7 @@
                 <p class="meus-pontos">Meus pontos</p>
                 <p class="pontuacao-usuario" id="userPoints">1.304</p> <div class="barra-progresso">
                     <div class="progresso-preenchido" id="progressBar" style="width: 65%;"></div> </div>
-                <small id="nextLevelText">Próximo nível: 2.000 pontos</small> </div>
+                <small id="nextLevelText"></small> </div>
 
             <div class="botoes-perfil">
                 <button class="botao-perfil">Status</button>
@@ -62,7 +62,8 @@
             }
 
             try {
-                const response = await fetch(`http://18.222.5.253:5000/user-data/${userId}`); // URL da API
+                // CORRIGIDO: URL da API para localhost
+                const response = await fetch(`http://18.222.5.253:5000/user-data/${userId}`); 
                 const data = await response.json();
 
                 if (response.ok) {
@@ -88,7 +89,8 @@
                     if (user.recent_discards && user.recent_discards.length > 0) {
                         user.recent_discards.forEach(discard => {
                             const listItem = document.createElement('li');
-                            listItem.textContent = `📦 ${discard.item} - ${discard.weight} - ${discard.date}`;
+                            // Adicionando a location ao descarte recente
+                            listItem.textContent = `📦 ${discard.item} - ${discard.weight} - ${discard.location} - ${discard.date}`; 
                             recentDiscardsList.appendChild(listItem);
                         });
                     } else {
