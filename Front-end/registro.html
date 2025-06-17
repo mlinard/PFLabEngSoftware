@@ -7,9 +7,7 @@
 </head>
 <body>
 
-    <!-- Cabeçalho padrão (não alterar) -->
     <header class="topo">
-        <!-- Título com link para a página inicial -->
         <h1 class="titulo-principal"><a href="index.html" class="link-titulo">ReciclaFácil</a></h1>
         <nav class="menu-superior">
             <a href="perfil.html" class="link-menu">Início</a>
@@ -20,29 +18,130 @@
         </nav>
     </header>
 
-    <!-- Conteúdo principal -->
     <main class="registro-main">
         <h2 class="titulo-pagina">Registrar Descarte</h2>
         <p class="subtitulo-pagina">Informe seu descarte e receba pontos</p>
     
         <div class="card-formulario">
             <form class="formulario-registro">
-                <label class="label-registro">📦 Tipo de material</label>
-                <input type="text" class="input-registro" placeholder="Ex: Plástico, Papelão, Vidro...">
+                <label class="label-registro" for="materialType">📦 Tipo de material</label>
+                <select id="materialType" class="input-registro">
+                    <option value="">Selecione o tipo de material</option>
+                    <option value="Plástico">Plástico</option>
+                    <option value="Papel">Papel</option>
+                    <option value="Alumínio">Alumínio</option>
+                    <option value="Orgânico">Orgânico</option>
+                    <option value="Vidro">Vidro</option>
+                    <option value="Outros">Outros</option>
+                </select>
+
+                <label class="label-registro" for="weight">⚖️ Peso (kg)</label>
+                <input type="number" id="weight" class="input-registro" placeholder="Ex: 0.5, 2.0" step="0.1" min="0.1">
     
-                <label class="label-registro">📍 Local</label>
-                <input type="text" class="input-registro" placeholder="Ex: Ponto de coleta XYZ">
+                <label class="label-registro" for="discardLocation">📍 Local de Descarte</label>
+                <input type="text" id="discardLocation" class="input-registro" placeholder="Ex: EcoPonto Vila Esperança">
     
-                <label class="label-registro">📅 Data</label>
-                <input type="date" class="input-registro">
+                <label class="label-registro" for="discardDate">📅 Data</label>
+                <input type="date" id="discardDate" class="input-registro">
     
-                <div class="area-foto">
-                    <p>🖼️ Inserir foto</p>
-                </div>
-    
-                <button class="botao-registrar" type="button">Registrar Descarte</button>
+                <button class="botao-registrar" type="button" id="registerDiscardButton">Registrar Descarte</button>
+                <p id="discardMessage" style="color: red; margin-top: 10px;"></p>
             </form>
         </div>
     </main>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerDiscardButton = document.getElementById('registerDiscardButton');
+            const discardMessage = document.getElementById('discardMessage');
+
+            // Define os pontos por categoria de material
+            const materialPoints = {
+                "Plástico": 150,
+                "Papel": 100,
+                "Alumínio": 150,
+                "Orgânico": 50,
+                "Vidro": 200,
+                "Outros": 75 // Valor padrão para 'Outros'
+            };
+
+            registerDiscardButton.addEventListener('click', async () => {
+                const userId = localStorage.getItem('loggedInUserId');
+                if (!userId) {
+                    discardMessage.style.color = 'red';
+                    discardMessage.textContent = 'Você precisa estar logado para registrar um descarte.';
+                    setTimeout(() => {
+                        window.location.href = 'index.html'; // Redireciona para o login
+                    }, 2000);
+                    return;
+                }
+
+                const materialType = document.getElementById('materialType').value;
+                const weight = document.getElementById('weight').value;
+                const discardLocation = document.getElementById('discardLocation').value;
+                const discardDate = document.getElementById('discardDate').value;
+
+                // Validação básica dos campos
+                if (!materialType || !weight || !discardLocation || !discardDate) {
+                    discardMessage.style.color = 'red';
+                    discardMessage.textContent = 'Por favor, preencha todos os campos.';
+                    return;
+                }
+                if (parseFloat(weight) <= 0) {
+                    discardMessage.style.color = 'red';
+                    discardMessage.textContent = 'O peso deve ser um valor positivo.';
+                    return;
+                }
+
+                // Obtém os pontos baseados no tipo de material
+                const pointsEarned = materialPoints[materialType] || 0; // Se a categoria não estiver mapeada, pontos = 0
+
+                const discardData = {
+                    userId: userId,
+                    item: materialType,
+                    weight: parseFloat(weight),
+                    location: discardLocation,
+                    date: discardDate,
+                    points: pointsEarned // Inclui os pontos no objeto de descarte
+                };
+
+                try {
+                    const response = await fetch('http://18.222.5.253:5000/register-discard', { // Alterar URL para localhost
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(discardData)
+                    });
+
+                    const data = await response.json();
+
+                    if (response.ok) {
+                        discardMessage.style.color = 'green';
+                        discardMessage.textContent = data.message;
+                        // Limpar formulário após sucesso
+                        document.getElementById('materialType').value = '';
+                        document.getElementById('weight').value = '';
+                        document.getElementById('discardLocation').value = '';
+                        document.getElementById('discardDate').value = '';
+                        
+                        // Opcional: Redirecionar para a página de perfil ou pontuação após um tempo
+                        setTimeout(() => {
+                            window.location.href = 'perfil.html'; 
+                        }, 2000);
+
+                    } else {
+                        discardMessage.style.color = 'red';
+                        discardMessage.textContent = data.message || 'Erro ao registrar descarte.';
+                    }
+                } catch (error) {
+                    console.error('Erro na requisição de registro de descarte:', error);
+                    discardMessage.style.color = 'red';
+                    discardMessage.textContent = 'Não foi possível conectar ao servidor para registrar o descarte.';
+                }
+            });
+        });
+    </script>
     
+</body>
+</html>
