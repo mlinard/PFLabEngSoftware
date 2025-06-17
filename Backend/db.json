@@ -2,66 +2,80 @@
   "users": [
     {
       "id": "user1",
-      "email": "marcos@example.com",
-      "password": "senha123",
-      "name": "Marcos Paulo",
-      "points": 1304,
-      "next_level_points": 2000,
+      "email": "marcello.linard@gmail.com",
+      "password_hash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+      "name": "Marcello Linard Linard",
+      "points": 0,
+      "next_level_points": 100,
       "badges": [
-        "Iniciante",
-        "Eco Warrior",
-        "Top Reciclador"
+        "Primeiro Alumínio",
+        "Primeiro Vidro"
       ],
       "recent_discards": [
         {
-          "item": "Papelão",
-          "weight": "2kg",
-          "date": "24/04/2025"
+          "item": "Vidro",
+          "weight": "12kg",
+          "location": "atin",
+          "date": "5202-02-12"
         },
         {
           "item": "Alumínio",
-          "weight": "1.2kg",
-          "date": "22/04/2025"
+          "weight": "145kg",
+          "location": "jacana",
+          "date": "2022-01-12"
         },
         {
-          "item": "Orgânico",
-          "weight": "5kg",
-          "date": "20/04/2025"
+          "item": "Alumínio",
+          "weight": "1.5kg",
+          "location": "pompeia",
+          "date": "2025-04-13"
+        }
+      ],
+      "redeemed_rewards": [
+        {
+          "name": "Saco de compras reutilizável",
+          "cost": 500,
+          "date": "17/06/2025"
         }
       ]
     },
     {
       "id": "user2",
-      "email": "ana@example.com",
-      "password": "ana456",
-      "name": "Ana Silva",
-      "points": 850,
-      "next_level_points": 1000,
+      "email": "marcello.linard@gmail.com01",
+      "password_hash": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+      "name": "Marcello ",
+      "points": 750,
+      "next_level_points": 10000,
       "badges": [
-        "Iniciante"
+        "Primeiro Vidro",
+        "Primeiro Alumínio"
       ],
       "recent_discards": [
         {
-          "item": "Vidro",
-          "weight": "1kg",
-          "date": "15/05/2025"
+          "item": "Alumínio",
+          "weight": "0.2kg",
+          "location": "Ferro velho",
+          "date": "2024-05-16"
         },
         {
-          "item": "Plástico",
+          "item": "Vidro",
+          "weight": "5kg",
+          "location": "vridracaria",
+          "date": "2009-02-01"
+        },
+        {
+          "item": "Vidro",
           "weight": "0.5kg",
-          "date": "10/05/2025"
+          "location": "mercado alegria",
+          "date": "2025-03-10"
+        },
+        {
+          "item": "Vidro",
+          "weight": "10kg",
+          "location": "Matilde",
+          "date": "2025-04-12"
         }
       ]
-    },
-    {
-      "id": "user3",
-      "email": "marcello.linard@gmail.com",
-      "password": "12345678",
-      "name": "Marcello ",
-      "points": 0,
-      "next_level_points": 100,
-      "badges": [],
-      "recent_discards": []
     }
   ]
 }
